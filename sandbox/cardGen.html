@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5; /* Light gray background for better contrast */
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 320px; /* Slightly larger to accommodate border */
+      height: 520px;
+      background-color: #FFDD33; /* Yellow border */
+      border-radius: 12px; /* Smooth rounded edges */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .inner-box {
+      width: 280px; /* Inner box dimensions */
+      height: 480px;
+      border-radius: 8px; /* Smooth rounded edges */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .mbti {
+      position: absolute;
+      top: 28px; /* Bring closer to the circle */
+      right: 45px; /* Adjusted to align closer with the circle */
+      font-size: 16px;
+      color: black;
+    }
+
+    .orb {
+      position: absolute;
+      top: 26px; /* Align with MBTI text */
+      right: 20px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Drop shadow effect */
+    }
+
+    .image-container {
+      margin-top: 60px; /* Centers the image vertically within the inner box */
+      width: 200px;
+      height: 200px;
+      border: 3px solid black;
+      overflow: hidden; /* Ensures the image stays within the border */
+      border-radius: 5px; /* Slight rounding to match card design */
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image fills the container */
+    }
+
+    .rarity {
+      margin-top: 20px; /* Adds spacing below the image */
+      font-size: 14px;
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<script>
+  function generateGradient() {
+    const box = document.querySelector('.inner-box');
+    const orb = document.querySelector('.orb');
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    const angle = Math.floor(Math.random() * 360); // Random angle
+
+    // Apply the gradient to the inner-box
+    const gradient = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+    box.style.background = gradient;
+
+    // Convert colors to rgba for reduced opacity
+    const color1WithOpacity = hexToRgba(color1, 0.8);
+    const color2WithOpacity = hexToRgba(color2, 0.8);
+    const orbGradient = `linear-gradient(${angle}deg, ${color1WithOpacity}, ${color2WithOpacity})`;
+
+    // Apply the gradient to the orb
+    orb.style.background = orbGradient;
+  }
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  function hexToRgba(hex, alpha) {
+    // Convert HEX to RGB
+    const bigint = parseInt(hex.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  }
+
+  // Generate gradient on page load
+  window.onload = generateGradient;
+</script>
+
+<body>
+  <div class="card">
+    <div class="inner-box">
+      <!-- Header Text -->
+      <div class="header">Rod</div>
+      <!-- MBTI and Orb -->
+      <div class="mbti">ESFP</div>
+      <div class="orb"></div>
+      <!-- Generated Image -->
+      <div class="image-container">
+        <img src="/imageOne.jpg" alt="Generated Avatar">
+      </div>
+      <!-- Rarity -->
+      <div class="rarity">Rarity: 2%</div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+
+<!-- Version One :
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5; /* Light gray background for better contrast */
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      width: 320px; /* Slightly larger to accommodate border */
+      height: 520px;
+      background-color: #FFDD33; /* Yellow border */
+      border-radius: 12px; /* Smooth rounded edges */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .inner-box {
+      width: 280px; /* Inner box dimensions */
+      height: 480px;
+      background-image: url('/gradientOne.png'); /* Replace with your gradient image */
+      background-size: cover; /* Ensure the gradient covers the box */
+      background-position: center;
+      border-radius: 8px; /* Smooth rounded edges */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+    }
+
+    .mbti {
+      position: absolute;
+      top: 28px; /* Bring closer to the circle */
+      right: 45px; /* Adjusted to align closer with the circle */
+      font-size: 16px;
+      color: black;
+    }
+
+    .orb {
+      position: absolute;
+      top: 26px; /* Align with MBTI text */
+      right: 20px;
+      width: 25px;
+      height: 25px;
+      background-color: blue;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Drop shadow effect */
+    }
+
+    .image-container {
+      margin-top: 60px; /* Centers the image vertically within the inner box */
+      width: 200px;
+      height: 200px;
+      border: 3px solid black;
+      overflow: hidden; /* Ensures the image stays within the border */
+      border-radius: 5px; /* Slight rounding to match card design */
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image fills the container */
+    }
+
+    .rarity {
+      margin-top: 20px; /* Adds spacing below the image */
+      font-size: 14px;
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<script>
+  function generateGradient() {
+    const box = document.getElementById('gradientBox');
+    const color1 = getRandomColor();
+    const color2 = getRandomColor();
+    const angle = Math.floor(Math.random() * 360); // Random angle
+
+    // Apply the gradient
+    box.style.background = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+  }
+
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+</script>
+
+<body>
+  <div class="card">
+    <div class="inner-box">
+      <div class="header">Rod</div>
+      <div class="mbti">ESFP</div>
+      <div class="orb"></div>
+      <div class="image-container">
+        <img src="/imageOne.jpg" alt="Generated Avatar">
+      </div>
+      <div class="rarity">Rarity: 2%</div>
+    </div>
+  </div>
+</body>
+</html>
+
+-->
