@@ -1,0 +1,19 @@
+from flask import Flask, request, send_file
+from imageGen import generate_gradient, save_image
+
+app = Flask(__name__)
+
+@app.route("/generate-image", methods=["POST"])
+def generate_image():
+    data = request.json
+    image_path = data.get("image_path", "gradient.jpg")
+    prompt = data.get("prompt", "unique gradient")
+    try:
+        output_image = generate_gradient(image_path=image_path, prompt=prompt)
+        output_filename = save_image(output_image)
+        return send_file(output_filename, mimetype="image/png")
+    except Exception as e:
+        return {"error": str(e)}, 500
+
+if __name__ == "__main__":
+    app.run(debug=True)
